@@ -13,23 +13,14 @@ void BinTree<T>::insert(T x){
 	}
 
 
-	Node<T>* current = root;
-	Node<T>* previous = root;
-	
-	while(current != nullptr){
-		previous = current;
-		if(x > current->data)
-			current = current->right;
-		else if(x < current->data)
-			current = current->left;
-		else
-			return;
-	}
+	Node<T>* current = searchNode(x);
 
-	if(x > previous->data)
-		previous->right = new Node<T>(x);
+	if(x > current->data)
+		current->right = new Node<T>(x);
+	else if(x < current->data)
+		current->left = new Node<T>(x);
 	else
-		previous->left = new Node<T>(x);
+		return;
 
 }
 
@@ -62,12 +53,12 @@ template <typename T>
 void BinTree<T>::printInfix(Node<T>* node, int level){
 
 	if(node != nullptr){
-		printPrefix(node->left, level + 1);
+		printInfix(node->left, level + 1);
 
 		for(int i = 0; i<level; i++) std::cout<<"--";
 		std::cout<<" "<<node->data <<std::endl;
 
-		printPrefix(node->right, level + 1);
+		printInfix(node->right, level + 1);
 	}
 
 }
@@ -113,7 +104,64 @@ Node<T>* BinTree<T>::searchNode(T x){
 }
 
 template <typename T>
+T BinTree<T>::findMostleft(Node<T>* node){
+	while(node->left != nullptr)
+		node = node->left;
+
+	return node->data;
+}
+
+template <typename T>
 void BinTree<T>::deleteNode(T x){
+	
+	Node<T>* current = root;
+	Node<T>* previous = root;
+
+	while(current != nullptr && current->data != x){
+		previous = current;
+		if(x > current->data)
+			current = current->right;
+		else if(x < current->data)
+			current = current->left;
+	}
+
+	if(current == nullptr)
+		return;
+
+
+	if(current->left == nullptr && current->right == nullptr){
+
+		if(current != root){
+
+			if(previous->left == current)
+				previous->left = nullptr;
+			else
+				previous->right = nullptr;
+		}
+		else
+			root = nullptr;
+
+		delete current;
+	}
+	else if(current->left && current->right){
+		T mostLeft = findMostleft(current->right);
+		deleteNode(mostLeft);
+		current->data = mostLeft;
+	}
+	else{
+		Node<T>* child = (current->right)? current->right : current->left;
+
+		if(current != root){
+			if(current == previous->right)
+				previous->right = child;
+			else
+				previous->left = child;
+		}
+		else
+			root = child;
+
+		delete current;
+	}
 
 }
 

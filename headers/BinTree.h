@@ -12,6 +12,7 @@ private:
 	void printPrefix(Node<T>*, int level = 0);	
 	void printPostfix(Node<T>*, int level = 0);
 	void printInfix(Node<T>*, int level = 0);
+	T findMostleft(Node<T>*);
 
 public:
 

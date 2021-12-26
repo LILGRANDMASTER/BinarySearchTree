@@ -6,7 +6,6 @@ int main(){
 
 	BinTree<int> tree;
 	tree.insert(1);
-	tree.print(3);
 	tree.insert(10);
 	tree.insert(-10);
 	tree.insert(5);
@@ -16,6 +15,9 @@ int main(){
 	tree.insert(-20);
 	tree.insert(-4);
 	tree.print(3);
-	if(3 == (tree.searchNode(3))->data) std::cout<<"Ok"<<std::endl;
+	tree.deleteNode(5);
+	std::cout<<"================================"<<std::endl;
+	tree.print(3);
+	
 	return 0;
 }
