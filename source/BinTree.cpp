@@ -6,6 +6,23 @@ template <typename T>
 BinTree<T>::BinTree():root(nullptr){}
 
 template <typename T>
+void BinTree<T>::deleteAll(Node<T>*& node){
+    if(node != nullptr){
+        deleteAll(node->right);
+        deleteAll(node->left);
+
+        delete node;
+    }
+    
+    node = nullptr;
+}
+
+template <typename T>
+BinTree<T>::~BinTree(){
+    deleteAll(root);
+}
+
+template <typename T>
 void BinTree<T>::insert(T x){
 	if(root == nullptr){
 		root = new Node<T>(x);

@@ -2,6 +2,7 @@
 #include "BinTree.h"
 #include <stdio.h>
 
+
 int main(){
 
 	BinTree<int> tree;

@@ -12,11 +12,13 @@ private:
 	void printPrefix(Node<T>*, int level = 0);	
 	void printPostfix(Node<T>*, int level = 0);
 	void printInfix(Node<T>*, int level = 0);
+    void deleteAll(Node<T>*&);
 	T findMostleft(Node<T>*);
 
 public:
 
 	BinTree();
+    ~BinTree();
 	void insert(T x);
 	void deleteNode(T x);
 	void print(int mode);
